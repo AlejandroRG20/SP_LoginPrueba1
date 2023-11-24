@@ -40,4 +40,3 @@ C:\Users\Alejandro\source\repos\PRUEBAUSER2\PRUEBAUSER2\obj\Debug\net6.0-windows
 C:\Users\Alejandro\source\repos\PRUEBAUSER2\PRUEBAUSER2\obj\Debug\net6.0-windows\PRUEBAUSER2.pdb
 C:\Users\Alejandro\source\repos\PRUEBAUSER2\PRUEBAUSER2\obj\Debug\net6.0-windows\PRUEBAUSER2.genruntimeconfig.cache
 C:\Users\Alejandro\source\repos\PRUEBAUSER2\PRUEBAUSER2\obj\Debug\net6.0-windows\ref\PRUEBAUSER2.dll
-C:\Users\Alejandro\source\repos\PRUEBAUSER2\PRUEBAUSER2\obj\Debug\net6.0-windows\PRUEBAUSER2.Form2.resources

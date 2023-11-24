@@ -1,7 +1,7 @@
 create database pruebaUSER1
 
 USE pruebaUSER1
-
+USE pruebaUSER1;
 Create table usuarios(
 IdUsuario int primary key identity,
 NombreUsuario varchar(50) not null,

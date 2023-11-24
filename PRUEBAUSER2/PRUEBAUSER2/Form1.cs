@@ -9,7 +9,8 @@ namespace PRUEBAUSER2
     public partial class Form1 : Form
     {
         
-        
+
+
         public Form1()
         {
             InitializeComponent();
@@ -30,14 +31,22 @@ namespace PRUEBAUSER2
             {
                 // Abre la conexión
                 adminConnection.Open();
-
+             
                 // Crea un comando para ejecutar la creación del nuevo usuario
-                using (SqlCommand createUserCommand = new SqlCommand($"CREATE LOGIN {nuevoUsuario} WITH PASSWORD = '{nuevaContraseña}', DEFAULT_DATABASE = [pruebaUSER1];", adminConnection))
-                {
-                    
+                using (SqlCommand createUserCommand = new SqlCommand($"CREATE LOGIN {nuevoUsuario} WITH PASSWORD = '{nuevaContraseña}', DEFAULT_DATABASE = [pruebaUSER1]; ALTER LOGIN {nuevoUsuario} ENABLE", adminConnection))
+
+                { 
+                    try
+                    { 
                         // Ejecuta el comando para crear el nuevo usuario
                         createUserCommand.ExecuteNonQuery();
-                        MessageBox.Show("Usuario creado con éxito.");
+                        MessageBox.Show("Usuario creado con éxito y permisos para iniciar sesión otorgados.");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error en NonQuery: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                    }
+                    adminConnection.Close();
                         try {
                             // Ahora, conecta como el nuevo usuario para ejecutar comandos en su contexto
                             string userConnectionString = $"Data Source=DESKTOP-0LIQUQM\\SQLEXPRESS;Initial Catalog=pruebaUSER1;User Id={nuevoUsuario};Password={nuevaContraseña};TrustServerCertificate=True;";
@@ -45,6 +54,14 @@ namespace PRUEBAUSER2
                             {
                                 // Abre la conexión como el nuevo usuario
                                 userConnection.Open();
+                            try {
+                                MessageBox.Show("inicio de seccion con el nuevo usuario exitoso");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Error 11111: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                            }
+                           
                                 // Crea un comando para insertar el nuevo usuario en la tabla 'usuarios'
                                 using (SqlCommand insertCommand = new SqlCommand("INSERT INTO usuarios (nombreUsuario, contraseña) VALUES (@NombreUsuario, @Contraseña)", userConnection))
                                 {
@@ -56,7 +73,7 @@ namespace PRUEBAUSER2
                                     insertCommand.ExecuteNonQuery();
                                     MessageBox.Show("Usuario insertado con éxito en la tabla 'usuarios'.");
 
-                                  //Crea un comando para otorgar privilegios al nuevo usuario
+                                 // Crea un comando para otorgar privilegios al nuevo usuario
                                    using (SqlCommand grantPermissionsCommand = new SqlCommand(
                                    $"USE pruebaUSER1; " +
                                    $"CREATE USER {nuevoUsuario} FOR LOGIN {nuevoUsuario}; " +
@@ -70,13 +87,15 @@ namespace PRUEBAUSER2
                                     MessageBox.Show("Privilegios otorgados al usuario en la base de datos.");
                                    }
                                 }
+                                userConnection.Close();
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Error al iniciar seccion con el usuario nuevo: " + ex.Message);
-                        }
-                    
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al iniciar sesion con el nuevo usuario: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                    }
+
+
                 }
             }
 
